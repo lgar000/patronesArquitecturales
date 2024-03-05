@@ -6,7 +6,7 @@ import static spark.Spark.get;
 
 public class LogServiceFachada {
 
-    private static final String LOG_SERVICE= "localhost:5000/";
+    private static final String LOG_SERVICE= "localhost:5000/logService";
 
     public static void main(String... args){
         RemoteServicesInvoke remoteServicesInvoke= new RemoteServicesInvoke(LOG_SERVICE);
