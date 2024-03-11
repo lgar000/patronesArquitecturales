@@ -1,62 +1,75 @@
-# Project Title
+## TALLER PATRONES ARQUITECTURALES
 
-Simple overview of use/purpose.
+Para este taller se construyó una aplicación que debe tener un formulario para el ingreso de cadenas, a partir de este se deben mostrar la fecha de introducción de la cadena y el mensaje de la cadena. En este se mostrará las últimas 10 cadenas ingresadas. Está aplicación se desplegó en AWS usando EC2 y Docker.
 
-## Description
+### Prerrequisitos
 
-An in-depth paragraph about your project and overview of use.
+- Java
+- Maven
+- Git
+- Docker
 
-## Getting Started
+### Instalación
 
-### Dependencies
+Para hacer uso del proyecto clone el repositorio usando el siguiente comando
 
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
-
-### Installing
-
-* How/where to download your program
-* Any modifications needed to be made to files/folders
-
-### Executing program
-
-* How to run the program
-* Step-by-step bullets
 ```
-code blocks for commands
+git clone https://github.com/lgar000/patronesArquitecturales.git
 ```
 
-## Help
+Ubiquese en la carpeta en la cual clono el repositorio. A continuación
+acceda a la carpeta principal del proyecto mediante el siguiente comando
 
-Any advise for common problems or issues.
 ```
-command to run if program contains helper info
+cd patronesArquitecturales
 ```
 
-## Authors
+Para compilar y empaquetar, ejecute
 
-Contributors names and contact info
+```
+mvn clean install
+```
 
-ex. Dominique Pizzie
-ex. [@DomPizzie](https://twitter.com/dompizzie)
+Para construir las imagenes docker del proyecto, biquese en la carpeta raíz del mismo y ejecute los siguientes comandos, lo que debería generar las imagenes en docker desktop
 
-## Version History
+```
+docker build -t logservice:latest -f DockerLogService .
+```
 
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 0.1
-    * Initial Release
+```
+docker build -t httplogservice:latest -f DockerHttpLogService .
+```
 
-## License
+En el caso del docker-compose.yml, ejecute el siguiente comando
 
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
+```
+docker-compose up -d
+```
 
-## Acknowledgments
 
-Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+
+## Pruebas
+
+
+
+
+
+
+## Diseño
+
+
+
+## Construido Con
+
+* [Java 11](https://www.oracle.com/co/java/technologies/javase/jdk11-archive-downloads.html) - Lenguaje de programación y desarrollo
+* [Html](https://developer.mozilla.org/es/docs/Web/HTML) - Lenguaje de marcado para la elaboración de páginas web
+* [JavaScript](https://developer.mozilla.org/es/docs/Web/CSS) -JavaScript es un lenguaje de programación interpretado
+* [Maven](https://maven.apache.org/) - Gestión de dependencias
+* [Intellij](https://www.jetbrains.com/es-es/idea/) - Entorno de desarrollo integrado para el desarrollo de programas informáticos
+* [Git](https://rometools.github.io/rome/) - Sistema de control de versiones distribuido
+* [Docker](https://www.docker.com/) - Docker es una plataforma de código abierto diseñada para facilitar la creación, implementación y ejecución de aplicaciones en contenedores
+
+## Autor
+
+* **Laura García** - [lgar000](https://github.com/lgar000)
+

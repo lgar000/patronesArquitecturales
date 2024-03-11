@@ -1,5 +1,7 @@
 package edu.escuelaing.arem.ASE.app;
 
+import com.google.gson.Gson;
+
 import static spark.Spark.*;
 
 public class LogService {
@@ -7,11 +9,22 @@ public class LogService {
 
 
     public static void main(String... args){
+
+        MongoDatabaseOperations mongoDatabaseOperations= new MongoDatabaseOperations();
+
+
         port(getPort());
-        get("logService", (req,res) ->
-        {
+        get("/", (req, res) -> {
             res.type("application/json");
-            return "{\"message\":\"Custom 404\"}";
+            Gson gson = new Gson();
+            return gson.toJson(mongoDatabaseOperations.getLogs());
+        });
+
+        post("/", (req, res) -> {
+            res.type("application/json");
+            mongoDatabaseOperations.insertLog(req.body());
+            Gson gson = new Gson();
+            return gson.toJson(mongoDatabaseOperations.getLogs());
         });
     }
 
@@ -20,7 +33,7 @@ public class LogService {
         if (System.getenv("PORT") != null) {
             return Integer.parseInt(System.getenv("PORT"));
         }
-        return 5000;
+        return 35001;
     }
 
 

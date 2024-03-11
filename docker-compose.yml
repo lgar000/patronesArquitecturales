@@ -1,0 +1,37 @@
+version: '2'
+
+
+services:
+  web:
+    image: httplogservice:latest
+    container_name: web
+    ports:
+      - "4567:46000"
+  db:
+    image: mongo:3.6.1
+    container_name: db
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+    ports:
+      - 27017:27017
+    command: mongod
+  log1:
+    image: logservice:latest
+    container_name: log1
+    ports:
+      - "35001:46000"
+  log2:
+    image: logservice:latest
+    container_name: log2
+    ports:
+      - "35002:46000"
+  log3:
+    image: logservice:latest
+    container_name: log3
+    ports:
+      - "35003:46000"
+
+volumes:
+  mongodb:
+  mongodb_config:
