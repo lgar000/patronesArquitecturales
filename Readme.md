@@ -30,7 +30,7 @@ Para compilar y empaquetar, ejecute
 mvn clean install
 ```
 
-Para construir las imagenes docker del proyecto, biquese en la carpeta raíz del mismo y ejecute los siguientes comandos, lo que debería generar las imagenes en docker desktop
+Para construir las imagenes docker del proyecto, ubiquese en la carpeta raíz del mismo y ejecute los siguientes comandos, lo que debería generar las imagenes en docker desktop
 
 ```
 docker build -t logservice:latest -f DockerLogService .
@@ -46,22 +46,41 @@ En el caso del docker-compose.yml, ejecute el siguiente comando
 docker-compose up -d
 ```
 
+Una vez hecho esto podrá verificar la creación de los mismo mediante docker desktop, en donde deberá ver lo siguiente
 
+Contenedores:
+
+![contenedores](https://github.com/lgar000/patronesArquitecturales/blob/main/Imagenes/contenedores.png)
+
+Imagenes:
+
+![imagenes](https://github.com/lgar000/patronesArquitecturales/blob/main/Imagenes/imagenes.png)
 
 ## Pruebas
 
+Si desea probar el funcionamiento localmente, debe verificar que en docker desktop, en la parte de contenedores se encuentre en ejecución el contendor patronesarquitecturales, tal y como se mostró en la imagen de contenedores. Sí es así diríjase a un navegador e ingrese la url : http://localhost:4567. Aquí encontrará un formulario que le permite ingresar cadenas y le mostrará las últimas diez cadenas ingresadas:
 
+![imagenes](https://github.com/lgar000/patronesArquitecturales/blob/main/Imagenes/pruebaLocal1.png)
 
+En caso de que usted ya haya ingresado las 10 cadenas e ingrese una nueva, la última cadena dejará de mostrarse y la primera fila será ocupada por la cadena que acaba de ingresar:
 
-
+![imagenes](https://github.com/lgar000/patronesArquitecturales/blob/main/Imagenes/pruebaLocal2.png)
 
 ## Diseño
 
+Contamos con la clase HttpURLConnection que mediante RemoteServicesInvoke maneja solicitudes http get y post. HttpURLConnection contiene una lista de las url o endpoints correspondientes a los LogService definidos en docker-composite.yml y aquí mismo se implementa un método (roundRobin), que es el encargado de balanceo de cargas, este se asegura de que se rote la petición a cada uno de las url de los Log service. Este método es llamado en getLogs y insertLog respectivamente.
+Por otro lado se tenemos la clase MongoDatabaseOperations
+, que es donde se encuentra la implementación de las funciones relacionadas con la base de datos mongodb. Aquí realizamos la conexión a la base de datos y definimos los métodos getLogs, que obtiene una lista de de documentos que representan los logs almacenados en la colección "arepLogs" de la base de datos "admin". Estos logs están ordenados  descendentemente y solamente muestra los últimos 10 registros. También tenemos el método insertLog, mediante el cual insertamos un nuevo log y finalmente tenemos closeConnection, para cerrar la conexión a la base de datos. Esta clase es usada por LogService, en la que se crea una instancia de MongoDatabaseOperations para interactuar con la base de datos MongoDB.  Esto con la finalidad de que cuando se haya definido una ruta  /" con un método GET, se retornen los logs en formato JSON obtenidos mediante mongoDatabaseOperations.getLogs() y para la ruta "/" con un método POST, que inserte un nuevo log en la base de datos utilizando mongoDatabaseOperations.insertLog(req.body()).
 
+## Despliegue en AWS
+
+Para verificar el despliegue del taller en en AWS usando EC2 y Docke, puede revisar el siguiente video:
+
+https://www.youtube.com/watch?v=x7JcbvYOSxk
 
 ## Construido Con
 
-* [Java 11](https://www.oracle.com/co/java/technologies/javase/jdk11-archive-downloads.html) - Lenguaje de programación y desarrollo
+* [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) - Lenguaje de programación y desarrollo
 * [Html](https://developer.mozilla.org/es/docs/Web/HTML) - Lenguaje de marcado para la elaboración de páginas web
 * [JavaScript](https://developer.mozilla.org/es/docs/Web/CSS) -JavaScript es un lenguaje de programación interpretado
 * [Maven](https://maven.apache.org/) - Gestión de dependencias
