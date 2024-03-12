@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 
 import static spark.Spark.*;
 
+/**
+ * Servicio web en Spark que interactua con la base de datos para obtener o insertar registros
+ */
 public class LogService {
 
 

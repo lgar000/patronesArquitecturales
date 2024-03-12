@@ -16,6 +16,11 @@ public class RemoteServicesInvoke {
 
     private static int instanceUrl= 0;
 
+    /**
+     * Manejo de peticiones get
+     * @return una  cadena de respuesta a la solicitud HTTP GET
+     * @throws IOException manejo de excepciones en caso de problemas de entrada/salida durante la conexión.
+     */
     public static String getLogs() throws IOException {
         URL obj = new URL(roundRobin());
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -41,6 +46,10 @@ public class RemoteServicesInvoke {
         }
     }
 
+    /**
+     * Manejo de peticiones post
+     * @throws IOException manejo de excepciones en caso de problemas de entrada/salida durante la conexión.
+     */
     static void insertLog(String body) throws IOException {
         URL obj = new URL(roundRobin());
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -57,10 +66,13 @@ public class RemoteServicesInvoke {
         System.out.println("Response Code: " + responseCode);
     }
 
+    /**
+     * Se encarga del balanceo de cargas para que se distribuyan uniformente las peticiones a url de los Log service
+     * @return una de las url disponibles en el arreglo GET_URL
+     */
     private static String roundRobin() {
         instanceUrl= ( instanceUrl+1)% RemoteServicesInvoke.GET_URL.length;
         String newUrl = RemoteServicesInvoke.GET_URL[instanceUrl];
-        System.out.println("Making request to: "+newUrl);
         return newUrl;
     }
 

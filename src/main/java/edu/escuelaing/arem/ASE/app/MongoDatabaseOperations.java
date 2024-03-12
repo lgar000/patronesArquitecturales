@@ -12,6 +12,9 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Sorts;
 import org.bson.Document;
 
+/**
+ * Define las operaciones necesarias para interactuar con la base de datos, obtener e insertar registros nuevos y conectar y cerrar conexión de la base de datos
+ */
 public class MongoDatabaseOperations {
 
     private MongoClient mongo;
@@ -20,6 +23,10 @@ public class MongoDatabaseOperations {
         mongo = new MongoClient("db", 27017);
     }
 
+    /**
+     * Retorna una lista de de documentos que representan los logs almacenados en la colección "arepLogs"
+     * @return retorna los ultimos 10 registros
+     */
     public List<Document> getLogs() {
         MongoDatabase db = mongo.getDatabase("admin");
         MongoCollection<Document> collection = db.getCollection("arepLogs");
@@ -35,6 +42,10 @@ public class MongoDatabaseOperations {
         return documents;
     }
 
+    /**
+     * Inserta un nuevo registro
+     * @param body el lo a registrar
+     */
     public void insertLog(String body) {
         MongoDatabase db = mongo.getDatabase("admin");
         MongoCollection<Document> collection = db.getCollection("arepLogs");
@@ -47,6 +58,9 @@ public class MongoDatabaseOperations {
         collection.insertOne(document);
     }
 
+    /**
+     * Cierra conexión de la base de datos
+     */
     public void closeConnection() {
         if (mongo != null) {
             mongo.close();
