@@ -76,7 +76,14 @@ y se probo el funcionamiento del método getLogs:
 
 ![testGetLogs](https://github.com/lgar000/patronesArquitecturales/blob/main/Imagenes/testGetLogs.png)
 
-Para ejecutarlas haga uso de su IDE o del comando mvn test.
+Para ejecutarlas haga uso de su IDE o del comando mvn:
+
+```
+mvn test
+```
+
+![testmvn](https://github.com/lgar000/patronesArquitecturales/blob/main/Imagenes/mvnTest.png)
+
 ## Diseño
 
 Contamos con la clase HttpURLConnection que mediante RemoteServicesInvoke maneja solicitudes http get y post. HttpURLConnection contiene una lista de las url o endpoints correspondientes a los LogService definidos en docker-composite.yml y aquí mismo se implementa un método (roundRobin), que es el encargado de balanceo de cargas, este se asegura de que se rote la petición a cada uno de las url de los Log service. Este método es llamado en getLogs y insertLog respectivamente.
